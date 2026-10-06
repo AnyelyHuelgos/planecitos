@@ -3,16 +3,16 @@ import { AppLayout } from "@/layouts/AppLayout";
 import { ActivityCard } from "@/components/ActivityCard";
 import { EmptyState } from "@/components/EmptyState";
 import { PremiumModal } from "@/components/PremiumModal";
-import { activities } from "@/data/activities";
 import { matchesFilters } from "@/services/activities";
 import { AGES, CATEGORY_LABEL, DURATIONS, LOCATION_LABEL, MATERIAL_LABEL } from "@/config/labels";
 import type { Age, Category, Duration, Location, Material } from "@/types/activity";
-import { useUser } from "@/hooks/use-session";
+import { useCatalog, useUser } from "@/hooks/use-session";
 
 const selectClass = "min-h-12 w-full rounded-xl border-2 border-input bg-light px-3 font-medium";
 
 export function LibraryPage() {
   const user = useUser();
+  const activities = useCatalog();
   const [modal, setModal] = useState(false);
   const [age, setAge] = useState<Age>();
   const [duration, setDuration] = useState<Duration>();
@@ -25,7 +25,7 @@ export function LibraryPage() {
       matchesFilters(a, { age, duration, category }) &&
       (!material || a.materialTags.includes(material)) &&
       (!location || a.location === location)),
-    [age, duration, category, material, location],
+    [activities, age, duration, category, material, location],
   );
 
   return (

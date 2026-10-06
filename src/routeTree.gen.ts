@@ -15,6 +15,7 @@ import { Route as CuentaRouteImport } from './routes/cuenta'
 import { Route as InicioRouteImport } from './routes/inicio'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MisPlanecitosRouteImport } from './routes/mis-planecitos'
+import { Route as NuevaContrasenaRouteImport } from './routes/nueva-contrasena'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as RecuperarRouteImport } from './routes/recuperar'
@@ -51,6 +52,11 @@ const LoginRoute = LoginRouteImport.update({
 const MisPlanecitosRoute = MisPlanecitosRouteImport.update({
   id: '/mis-planecitos',
   path: '/mis-planecitos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NuevaContrasenaRoute = NuevaContrasenaRouteImport.update({
+  id: '/nueva-contrasena',
+  path: '/nueva-contrasena',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
+  '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
   '/recuperar': typeof RecuperarRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
+  '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
   '/recuperar': typeof RecuperarRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
+  '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
   '/recuperar': typeof RecuperarRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
+    | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
     | '/recuperar'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
+    | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
     | '/recuperar'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
+    | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
     | '/recuperar'
@@ -190,6 +202,7 @@ export interface RootRouteChildren {
   InicioRoute: typeof InicioRoute
   LoginRoute: typeof LoginRoute
   MisPlanecitosRoute: typeof MisPlanecitosRoute
+  NuevaContrasenaRoute: typeof NuevaContrasenaRoute
   OnboardingRoute: typeof OnboardingRoute
   PremiumRoute: typeof PremiumRoute
   RecuperarRoute: typeof RecuperarRoute
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/mis-planecitos'
       fullPath: '/mis-planecitos'
       preLoaderRoute: typeof MisPlanecitosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nueva-contrasena': {
+      id: '/nueva-contrasena'
+      path: '/nueva-contrasena'
+      fullPath: '/nueva-contrasena'
+      preLoaderRoute: typeof NuevaContrasenaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -302,6 +322,7 @@ const rootRouteChildren: RootRouteChildren = {
   InicioRoute: InicioRoute,
   LoginRoute: LoginRoute,
   MisPlanecitosRoute: MisPlanecitosRoute,
+  NuevaContrasenaRoute: NuevaContrasenaRoute,
   OnboardingRoute: OnboardingRoute,
   PremiumRoute: PremiumRoute,
   RecuperarRoute: RecuperarRoute,

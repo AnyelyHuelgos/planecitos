@@ -6,7 +6,7 @@ import { Badge, Card, LightOrb, Logo, SectionHeader } from "@/components/primiti
 import { buttonClass } from "@/components/Button";
 import { ActivityCard } from "@/components/ActivityCard";
 import { SelectorWizard } from "@/components/SelectorWizard";
-import { activities } from "@/data/activities";
+import { useCatalog } from "@/hooks/use-session";
 import { HOTMART_CHECKOUT_URL, FOUNDERS_PRICE } from "@/config/checkout";
 import { track } from "@/services/analytics";
 
@@ -39,7 +39,7 @@ function Hero() {
         <div>
           <h1 className="text-[42px] leading-[1.02] md:text-[56px]">
             ¿Tienes 15 minutos?<br />
-            <span className="box-decoration-clone rounded-xl bg-sky-soft px-2">Tenemos un planecito.</span>
+            <span className="text-sky-deep">Tenemos un planecito.</span>
           </h1>
           <p className="mt-5 max-w-md text-lg md:text-xl">
             Dinos la edad y el tiempo. Te damos una idea lista, con lo que ya tienes en casa.
@@ -60,7 +60,7 @@ function HeroCard() {
     <div className="relative mx-auto w-full max-w-sm">
       <div className="absolute -inset-3 -z-0 rotate-3 rounded-[32px] bg-sky" aria-hidden />
       <Card className="relative rounded-[28px] p-6 shadow-lift">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-ink">Tu planecito está listo</p>
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-deep">Tu planecito está listo</p>
         <h3 className="mt-3 text-[30px]">Pintura escondida</h3>
         <div className="mt-4 flex flex-wrap gap-2">
           <Badge><Clock className="h-3.5 w-3.5" /> 15 min</Badge>
@@ -136,7 +136,8 @@ function Demo() {
 }
 
 function Examples() {
-  const list = exampleSlugs.map((s) => activities.find((a) => a.slug === s)!);
+  const catalog = useCatalog();
+  const list = exampleSlugs.map((s) => catalog.find((a) => a.slug === s)).filter((a) => !!a);
   return (
     <section id="planecitos" className="scroll-mt-20 bg-light py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5">

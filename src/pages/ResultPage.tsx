@@ -9,11 +9,18 @@ import { track } from "@/services/analytics";
 export function ResultPage({ matches, index, search }: { matches: Activity[]; index: number; search: Record<string, unknown> }) {
   const navigate = useNavigate();
   const router = useRouter();
-  const free = matches.filter((a) => !a.premium);
-  const list = free.length ? free : matches;
-  const activity = list[index % list.length]!;
+  // Supabase ya filtra: sin premium solo llegan gratis; con premium, todas.
+  const activity = matches.length ? matches[index % matches.length] : undefined;
 
-  useEffect(() => { track("activity_viewed", { slug: activity.slug, from: "result" }); }, [activity.slug]);
+  useEffect(() => { if (activity) track("activity_viewed", { slug: activity.slug, from: "result" }); }, [activity?.slug]);
+
+  if (!activity) {
+    return (
+      <AppLayout>
+        <p className="mx-auto max-w-md text-center text-lg">No pudimos cargar los planecitos. Revisa tu conexión e intenta de nuevo.</p>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>

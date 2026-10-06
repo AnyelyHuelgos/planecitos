@@ -7,9 +7,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { PremiumModal } from "@/components/PremiumModal";
 import { buttonClass } from "@/components/Button";
 import { LightOrb } from "@/components/primitives";
-import { useChild, useFavorites, useUser } from "@/hooks/use-session";
+import { useCatalog, useChild, useFavorites, useUser } from "@/hooks/use-session";
 import { useRequireUser } from "@/hooks/use-require-user";
-import { activities } from "@/data/activities";
 import { matchesFilters } from "@/services/activities";
 
 const quick = [
@@ -27,9 +26,10 @@ export function DashboardPage() {
   const child = useChild();
   const favs = useFavorites();
   const [modal, setModal] = useState(false);
+  const activities = useCatalog();
 
   const forChild = activities.filter((a) => !a.premium && matchesFilters(a, { age: child?.age }));
-  const recommended = forChild[new Date().getDate() % Math.max(forChild.length, 1)] ?? activities[0]!;
+  const recommended = forChild[new Date().getDate() % Math.max(forChild.length, 1)] ?? activities[0];
   const fast = activities.filter((a) => a.duration === 5).slice(0, 3);
   const saved = favs.map((s) => activities.find((a) => a.slug === s)).filter(Boolean).slice(0, 3);
 
@@ -52,7 +52,7 @@ export function DashboardPage() {
 
       <section className="mt-10">
         <h2 className="mb-4 text-[26px]">Planecito recomendado{child ? ` para ${child.name}` : ""}</h2>
-        <div className="max-w-md"><ActivityCard activity={recommended} /></div>
+        <div className="max-w-md">{recommended && <ActivityCard activity={recommended} />}</div>
       </section>
 
       <section className="mt-10">

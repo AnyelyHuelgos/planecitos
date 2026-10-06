@@ -13,6 +13,8 @@ const schema = z.object({
 });
 
 export const Route = createFileRoute("/resultado")({
+  // Se carga en el navegador para usar la sesión del usuario (premium)
+  ssr: false,
   validateSearch: schema,
   loaderDeps: ({ search }) => search,
   loader: ({ deps }) =>

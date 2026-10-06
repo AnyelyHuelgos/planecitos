@@ -1,14 +1,33 @@
-import { activities } from "@/data/activities";
 import type { Activity, SelectorFilters } from "@/types/activity";
+import { supabase } from "@/lib/supabase";
+import { loadCatalog, toActivity, type ActivityRow } from "./catalog";
 
-// Mock implementations — replace with Supabase queries later.
-
+/**
+ * Actividades completas (con pasos) que este usuario puede ver.
+ * RLS decide: sin cuenta o sin premium → solo gratis; premium → todas.
+ */
 export async function listActivities(): Promise<Activity[]> {
-  return activities;
+  const { data, error } = await supabase
+    .from("activities")
+    .select("*")
+    .eq("published", true)
+    .order("created_at");
+  if (error) {
+    console.error("[activities]", error.message);
+    return [];
+  }
+  return (data as ActivityRow[]).map((r) => toActivity(r));
 }
 
+/**
+ * Detalle de un planecito. Si es premium y el usuario no tiene acceso,
+ * devuelve solo los datos de la tarjeta (sin pasos) para mostrar el candado.
+ */
 export async function getActivityBySlug(slug: string): Promise<Activity | null> {
-  return activities.find((a) => a.slug === slug) ?? null;
+  const { data } = await supabase.from("activities").select("*").eq("slug", slug).maybeSingle();
+  if (data) return toActivity(data as ActivityRow);
+  const catalog = await loadCatalog();
+  return catalog.find((a) => a.slug === slug) ?? null;
 }
 
 export function matchesFilters(a: Activity, f: SelectorFilters): boolean {
@@ -22,8 +41,9 @@ export function matchesFilters(a: Activity, f: SelectorFilters): boolean {
   return true;
 }
 
-/** Returns ranked matches; falls back to relaxing filters so there's always a planecito. */
+/** Devuelve coincidencias; si no hay, relaja filtros para que siempre haya un planecito. */
 export async function findActivities(f: SelectorFilters): Promise<Activity[]> {
+  const all = await listActivities();
   const attempts: SelectorFilters[] = [
     f,
     { ...f, materials: undefined },
@@ -32,8 +52,8 @@ export async function findActivities(f: SelectorFilters): Promise<Activity[]> {
     {},
   ];
   for (const attempt of attempts) {
-    const res = activities.filter((a) => matchesFilters(a, attempt));
+    const res = all.filter((a) => matchesFilters(a, attempt));
     if (res.length) return res;
   }
-  return activities;
+  return all;
 }

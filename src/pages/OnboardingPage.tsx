@@ -16,7 +16,8 @@ export function OnboardingPage() {
     e.preventDefault();
     const name = String(new FormData(e.currentTarget).get("child")).trim();
     if (!age || !name) return setError(true);
-    await saveChildProfile({ name, age });
+    const res = await saveChildProfile({ name, age });
+    if (res.error) return setError(true);
     navigate({ to: "/inicio" });
   }
 

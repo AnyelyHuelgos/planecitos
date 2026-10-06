@@ -3,6 +3,8 @@ import { getActivityBySlug } from "@/services/activities";
 import { ActivityPage } from "@/pages/ActivityPage";
 
 export const Route = createFileRoute("/planecito/$slug")({
+  // Se carga en el navegador para usar la sesión del usuario (premium)
+  ssr: false,
   loader: async ({ params }) => {
     const activity = await getActivityBySlug(params.slug);
     if (!activity) throw notFound();

@@ -5,8 +5,7 @@ import { ActivityCard } from "@/components/ActivityCard";
 import { EmptyState } from "@/components/EmptyState";
 import { Button, buttonClass } from "@/components/Button";
 import { Badge, Card, Logo } from "@/components/primitives";
-import { activities } from "@/data/activities";
-import { useChild, useFavorites, useUser } from "@/hooks/use-session";
+import { useCatalog, useChild, useFavorites, useUser } from "@/hooks/use-session";
 import { useRequireUser } from "@/hooks/use-require-user";
 import { signOut } from "@/services/auth";
 import { HOTMART_CHECKOUT_URL, FOUNDERS_PRICE } from "@/config/checkout";
@@ -15,6 +14,7 @@ import { track } from "@/services/analytics";
 export function FavoritesPage() {
   useRequireUser();
   const favs = useFavorites();
+  const activities = useCatalog();
   const list = favs.map((s) => activities.find((a) => a.slug === s)).filter((a) => !!a);
   return (
     <AppLayout>

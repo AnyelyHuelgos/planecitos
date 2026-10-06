@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { AuthLayout, Field } from "@/layouts/AuthLayout";
 import { Button } from "@/components/Button";
-import { requestPasswordReset, signIn, signUp } from "@/services/auth";
+import { requestPasswordReset, signIn, signUp, updatePassword } from "@/services/auth";
 import { getChildProfile } from "@/services/profile";
 import { track } from "@/services/analytics";
 
@@ -41,14 +41,18 @@ export function LoginPage() {
 export function SignupPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [checkEmail, setCheckEmail] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     setLoading(true);
     track("signup_started");
-    await signUp({ name: String(fd.get("name")), email: String(fd.get("email")), password: String(fd.get("password")) });
+    const res = await signUp({ name: String(fd.get("name")), email: String(fd.get("email")), password: String(fd.get("password")) });
     setLoading(false);
+    if (res.error) return setError(res.error);
+    if (res.needsConfirmation) return setCheckEmail(true);
     navigate({ to: "/onboarding" });
   }
 
@@ -58,6 +62,8 @@ export function SignupPage() {
         <Field id="name" label="Tu nombre" autoComplete="given-name" required />
         <Field id="email" label="Email" type="email" autoComplete="email" required />
         <Field id="password" label="Contraseña" type="password" autoComplete="new-password" required minLength={6} />
+        {error && <p role="alert" className="text-destructive">{error}</p>}
+        {checkEmail && <p role="status" className="rounded-xl bg-sky-soft p-4">Te enviamos un correo para confirmar tu cuenta. Ábrelo y vuelve aquí.</p>}
         <Button type="submit" block size="lg" disabled={loading}>{loading ? "Creando…" : "Crear cuenta"}</Button>
       </form>
       <p className="mt-6 text-center text-muted-foreground">¿Ya tienes cuenta? <Link to="/login" className="font-semibold text-ink underline underline-offset-4">Inicia sesión</Link></p>
@@ -83,6 +89,29 @@ export function RecoverPage() {
         </form>
       )}
       <Link to="/login" className="mt-6 block text-center font-medium underline underline-offset-4">Volver a iniciar sesión</Link>
+    </AuthLayout>
+  );
+}
+
+export function NewPasswordPage() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const res = await updatePassword(String(new FormData(e.currentTarget).get("password")));
+    setLoading(false);
+    if (res.error) return setError(res.error);
+    navigate({ to: "/inicio" });
+  }
+  return (
+    <AuthLayout title="Crea tu nueva contraseña" subtitle="Escríbela y entras de una vez.">
+      <form onSubmit={onSubmit} className="space-y-4">
+        <Field id="password" label="Nueva contraseña" type="password" autoComplete="new-password" required minLength={6} />
+        {error && <p role="alert" className="text-destructive">{error}</p>}
+        <Button type="submit" block size="lg" disabled={loading}>{loading ? "Guardando…" : "Guardar contraseña"}</Button>
+      </form>
     </AuthLayout>
   );
 }

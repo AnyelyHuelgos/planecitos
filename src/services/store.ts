@@ -1,25 +1,16 @@
-// Tiny local store used by mock services until Supabase is connected.
+// Estado en memoria compartido por los servicios (sesión, niño, favoritos, catálogo).
+// Los datos reales viven en Supabase; esto solo los guarda mientras la app está abierta.
 type Listener = () => void;
 const listeners = new Set<Listener>();
-const cache = new Map<string, unknown>();
+const state = new Map<string, unknown>();
 
 export function read<T>(key: string, fallback: T): T {
-  if (typeof window === "undefined") return fallback;
-  if (cache.has(key)) return cache.get(key) as T;
-  try {
-    const raw = window.localStorage.getItem(`planecitos:${key}`);
-    const v = raw ? (JSON.parse(raw) as T) : fallback;
-    cache.set(key, v);
-    return v;
-  } catch {
-    return fallback;
-  }
+  return state.has(key) ? (state.get(key) as T) : fallback;
 }
 
 export function write<T>(key: string, value: T | null) {
-  cache.delete(key);
-  if (value === null) window.localStorage.removeItem(`planecitos:${key}`);
-  else window.localStorage.setItem(`planecitos:${key}`, JSON.stringify(value));
+  if (value === null) state.delete(key);
+  else state.set(key, value);
   listeners.forEach((l) => l());
 }
 
