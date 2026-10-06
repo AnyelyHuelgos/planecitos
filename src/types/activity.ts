@@ -26,10 +26,10 @@ export interface Activity {
 }
 
 export interface SelectorFilters {
-  age?: Age;
-  duration?: Duration;
-  category?: Category;
-  materials?: Material[];
+  age?: Age | undefined;
+  duration?: Duration | undefined;
+  category?: Category | undefined;
+  materials?: Material[] | undefined;
 }
 
 export interface ChildProfile {

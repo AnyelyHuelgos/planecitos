@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BibliotecaRouteImport } from './routes/biblioteca'
+import { Route as CuentaRouteImport } from './routes/cuenta'
+import { Route as InicioRouteImport } from './routes/inicio'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MisPlanecitosRouteImport } from './routes/mis-planecitos'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PremiumRouteImport } from './routes/premium'
+import { Route as RecuperarRouteImport } from './routes/recuperar'
+import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as ResultadoRouteImport } from './routes/resultado'
+import { Route as SelectorRouteImport } from './routes/selector'
+import { Route as PlanecitoSlugRouteImport } from './routes/planecito/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BibliotecaRoute = BibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuentaRoute = CuentaRouteImport.update({
+  id: '/cuenta',
+  path: '/cuenta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InicioRoute = InicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MisPlanecitosRoute = MisPlanecitosRouteImport.update({
+  id: '/mis-planecitos',
+  path: '/mis-planecitos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PremiumRoute = PremiumRouteImport.update({
+  id: '/premium',
+  path: '/premium',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecuperarRoute = RecuperarRouteImport.update({
+  id: '/recuperar',
+  path: '/recuperar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistroRoute = RegistroRouteImport.update({
+  id: '/registro',
+  path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultadoRoute = ResultadoRouteImport.update({
+  id: '/resultado',
+  path: '/resultado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SelectorRoute = SelectorRouteImport.update({
+  id: '/selector',
+  path: '/selector',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanecitoSlugRoute = PlanecitoSlugRouteImport.update({
+  id: '/planecito/$slug',
+  path: '/planecito/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/cuenta': typeof CuentaRoute
+  '/inicio': typeof InicioRoute
+  '/login': typeof LoginRoute
+  '/mis-planecitos': typeof MisPlanecitosRoute
+  '/onboarding': typeof OnboardingRoute
+  '/premium': typeof PremiumRoute
+  '/recuperar': typeof RecuperarRoute
+  '/registro': typeof RegistroRoute
+  '/resultado': typeof ResultadoRoute
+  '/selector': typeof SelectorRoute
+  '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/cuenta': typeof CuentaRoute
+  '/inicio': typeof InicioRoute
+  '/login': typeof LoginRoute
+  '/mis-planecitos': typeof MisPlanecitosRoute
+  '/onboarding': typeof OnboardingRoute
+  '/premium': typeof PremiumRoute
+  '/recuperar': typeof RecuperarRoute
+  '/registro': typeof RegistroRoute
+  '/resultado': typeof ResultadoRoute
+  '/selector': typeof SelectorRoute
+  '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/cuenta': typeof CuentaRoute
+  '/inicio': typeof InicioRoute
+  '/login': typeof LoginRoute
+  '/mis-planecitos': typeof MisPlanecitosRoute
+  '/onboarding': typeof OnboardingRoute
+  '/premium': typeof PremiumRoute
+  '/recuperar': typeof RecuperarRoute
+  '/registro': typeof RegistroRoute
+  '/resultado': typeof ResultadoRoute
+  '/selector': typeof SelectorRoute
+  '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/biblioteca'
+    | '/cuenta'
+    | '/inicio'
+    | '/login'
+    | '/mis-planecitos'
+    | '/onboarding'
+    | '/premium'
+    | '/recuperar'
+    | '/registro'
+    | '/resultado'
+    | '/selector'
+    | '/planecito/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/biblioteca'
+    | '/cuenta'
+    | '/inicio'
+    | '/login'
+    | '/mis-planecitos'
+    | '/onboarding'
+    | '/premium'
+    | '/recuperar'
+    | '/registro'
+    | '/resultado'
+    | '/selector'
+    | '/planecito/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/biblioteca'
+    | '/cuenta'
+    | '/inicio'
+    | '/login'
+    | '/mis-planecitos'
+    | '/onboarding'
+    | '/premium'
+    | '/recuperar'
+    | '/registro'
+    | '/resultado'
+    | '/selector'
+    | '/planecito/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BibliotecaRoute: typeof BibliotecaRoute
+  CuentaRoute: typeof CuentaRoute
+  InicioRoute: typeof InicioRoute
+  LoginRoute: typeof LoginRoute
+  MisPlanecitosRoute: typeof MisPlanecitosRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PremiumRoute: typeof PremiumRoute
+  RecuperarRoute: typeof RecuperarRoute
+  RegistroRoute: typeof RegistroRoute
+  ResultadoRoute: typeof ResultadoRoute
+  SelectorRoute: typeof SelectorRoute
+  PlanecitoSlugRoute: typeof PlanecitoSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +208,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/biblioteca': {
+      id: '/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/biblioteca'
+      preLoaderRoute: typeof BibliotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cuenta': {
+      id: '/cuenta'
+      path: '/cuenta'
+      fullPath: '/cuenta'
+      preLoaderRoute: typeof CuentaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inicio': {
+      id: '/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof InicioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mis-planecitos': {
+      id: '/mis-planecitos'
+      path: '/mis-planecitos'
+      fullPath: '/mis-planecitos'
+      preLoaderRoute: typeof MisPlanecitosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/premium': {
+      id: '/premium'
+      path: '/premium'
+      fullPath: '/premium'
+      preLoaderRoute: typeof PremiumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recuperar': {
+      id: '/recuperar'
+      path: '/recuperar'
+      fullPath: '/recuperar'
+      preLoaderRoute: typeof RecuperarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registro': {
+      id: '/registro'
+      path: '/registro'
+      fullPath: '/registro'
+      preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resultado': {
+      id: '/resultado'
+      path: '/resultado'
+      fullPath: '/resultado'
+      preLoaderRoute: typeof ResultadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/selector': {
+      id: '/selector'
+      path: '/selector'
+      fullPath: '/selector'
+      preLoaderRoute: typeof SelectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planecito/$slug': {
+      id: '/planecito/$slug'
+      path: '/planecito/$slug'
+      fullPath: '/planecito/$slug'
+      preLoaderRoute: typeof PlanecitoSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BibliotecaRoute: BibliotecaRoute,
+  CuentaRoute: CuentaRoute,
+  InicioRoute: InicioRoute,
+  LoginRoute: LoginRoute,
+  MisPlanecitosRoute: MisPlanecitosRoute,
+  OnboardingRoute: OnboardingRoute,
+  PremiumRoute: PremiumRoute,
+  RecuperarRoute: RecuperarRoute,
+  RegistroRoute: RegistroRoute,
+  ResultadoRoute: ResultadoRoute,
+  SelectorRoute: SelectorRoute,
+  PlanecitoSlugRoute: PlanecitoSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

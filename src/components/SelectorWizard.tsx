@@ -10,7 +10,7 @@ import { track } from "@/services/analytics";
 interface Props {
   /** Landing demo uses the shorter list of options. */
   demo?: boolean;
-  initialAge?: Age;
+  initialAge?: Age | undefined;
 }
 
 const fullCategories: Category[] = ["crear", "moverse", "aprender", "tranquilo", "juntos", "solo"];

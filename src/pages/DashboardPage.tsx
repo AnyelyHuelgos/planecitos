@@ -29,7 +29,7 @@ export function DashboardPage() {
   const [modal, setModal] = useState(false);
 
   const forChild = activities.filter((a) => !a.premium && matchesFilters(a, { age: child?.age }));
-  const recommended = forChild[new Date().getDate() % Math.max(forChild.length, 1)] ?? activities[0];
+  const recommended = forChild[new Date().getDate() % Math.max(forChild.length, 1)] ?? activities[0]!;
   const fast = activities.filter((a) => a.duration === 5).slice(0, 3);
   const saved = favs.map((s) => activities.find((a) => a.slug === s)).filter(Boolean).slice(0, 3);
 

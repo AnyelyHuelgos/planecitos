@@ -14,7 +14,7 @@ export async function signUp(input: { name: string; email: string; password: str
 
 export async function signIn(input: { email: string; password: string }) {
   const existing = getCurrentUser();
-  write<UserAccount>("user", existing ?? { name: input.email.split("@")[0], email: input.email, premium: false });
+  write<UserAccount>("user", existing ?? { name: input.email.split("@")[0] ?? "familia", email: input.email, premium: false });
   return { error: null as string | null };
 }
 
