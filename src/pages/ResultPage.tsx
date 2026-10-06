@@ -11,7 +11,7 @@ export function ResultPage({ matches, index, search }: { matches: Activity[]; in
   const router = useRouter();
   const free = matches.filter((a) => !a.premium);
   const list = free.length ? free : matches;
-  const activity = list[index % list.length];
+  const activity = list[index % list.length]!;
 
   useEffect(() => { track("activity_viewed", { slug: activity.slug, from: "result" }); }, [activity.slug]);
 
