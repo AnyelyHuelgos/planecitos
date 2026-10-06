@@ -23,7 +23,7 @@ export function Badge({ children, tone = "sky", className }: { children: ReactNo
 export function SectionHeader({ eyebrow, title, text, center }: { eyebrow?: string; title: ReactNode; text?: ReactNode; center?: boolean }) {
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")}>
-      {eyebrow && <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-sky-deep">{eyebrow}</p>}
+      {eyebrow && <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-ink">{eyebrow}</p>}
       <h2 className="text-[30px] md:text-[38px]">{title}</h2>
       {text && <p className="mt-4 text-lg text-muted-foreground">{text}</p>}
     </div>
