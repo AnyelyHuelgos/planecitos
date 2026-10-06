@@ -1,0 +1,7 @@
+# Configuración de despliegue en Netlify
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"
