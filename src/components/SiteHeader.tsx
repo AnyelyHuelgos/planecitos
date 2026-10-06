@@ -18,7 +18,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-20">
         <Link to="/" aria-label="Planecitos, inicio"><Logo className="h-8 md:h-10" /></Link>
         <nav className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => <a key={l.href} href={l.href} className="font-medium hover:text-sky-deep">{l.label}</a>)}
+          {links.map((l) => <a key={l.href} href={l.href} className="font-medium hover:underline underline-offset-4">{l.label}</a>)}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
           <Link to="/login" onClick={() => track("login_started")} className={buttonClass({ variant: "ghost", size: "sm" })}>Iniciar sesión</Link>

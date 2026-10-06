@@ -13,7 +13,7 @@ export function ActivityDetail({ activity: a, eyebrow, actions }: { activity: Ac
   const fav = useFavorites().includes(a.slug);
   return (
     <article className="mx-auto max-w-2xl fade-step">
-      {eyebrow && <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-deep">{eyebrow}</p>}
+      {eyebrow && <p className="text-xs font-bold uppercase tracking-[0.18em] text-ink">{eyebrow}</p>}
       <h1 className="mt-2 text-[36px] md:text-[48px]">{a.title}</h1>
       <div className="mt-4 flex flex-wrap gap-2">
         <Badge><Clock className="h-3.5 w-3.5" /> {a.duration} min</Badge>
