@@ -21,12 +21,12 @@ export function ActivityCard({ activity: a, locked, onLockedClick, showFavorite 
 
   const body = (
     <>
-      <ActivityArt category={a.category} className="aspect-[16/9] w-full" />
+      <ActivityArt category={a.category} age={a.minAge} className="aspect-[16/9] w-full" />
       <div className="p-5">
         <h3 className="text-[22px]">{a.title}</h3>
         <div className="mt-3 flex flex-wrap gap-2">
           <Badge><Clock className="h-3.5 w-3.5" /> {a.duration} min</Badge>
-          <Badge tone="paper">{a.minAge}+ años</Badge>
+          <Badge tone={`age${Math.min(5, Math.max(2, a.minAge))}` as "age2"}>{a.minAge}+ años</Badge>
           <Badge tone="paper">{CATEGORY_LABEL[a.category]}</Badge>
         </div>
         <p className="mt-3 text-[15px] text-muted-foreground">

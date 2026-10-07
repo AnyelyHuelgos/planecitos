@@ -2,19 +2,23 @@ import type { ReactNode, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-2xl bg-card border border-border shadow-soft", className)} {...props} />;
+  return <div className={cn("rounded-2xl bg-card border border-border", className)} {...props} />;
 }
 
 const badgeTone = {
-  sky: "bg-sky-soft text-ink",
-  paper: "bg-paper text-ink border border-border",
+  sky: "bg-light text-ink",
+  paper: "bg-white text-ink border border-border",
   spark: "bg-spark text-ink",
-  ink: "bg-ink text-light",
+  ink: "bg-ink text-white",
+  age2: "bg-age-2 text-ink",
+  age3: "bg-age-3 text-ink",
+  age4: "bg-age-4 text-ink",
+  age5: "bg-age-5 text-ink",
 };
 
 export function Badge({ children, tone = "sky", className }: { children: ReactNode; tone?: keyof typeof badgeTone; className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium", badgeTone[tone], className)}>
+    <span className={cn("inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold", badgeTone[tone], className)}>
       {children}
     </span>
   );
@@ -23,8 +27,8 @@ export function Badge({ children, tone = "sky", className }: { children: ReactNo
 export function SectionHeader({ eyebrow, title, text, center }: { eyebrow?: string; title: ReactNode; text?: ReactNode; center?: boolean }) {
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")}>
-      {eyebrow && <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-ink">{eyebrow}</p>}
-      <h2 className="text-[30px] md:text-[38px]">{title}</h2>
+      {eyebrow && <p className="mb-3 text-base font-semibold text-muted-foreground">{eyebrow}</p>}
+      <h2 className="text-[32px] md:text-[44px]">{title}</h2>
       {text && <p className="mt-4 text-lg text-muted-foreground">{text}</p>}
     </div>
   );

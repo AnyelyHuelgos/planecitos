@@ -14,11 +14,11 @@ const links = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-paper/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-20">
-        <Link to="/" aria-label="Planecitos, inicio"><Logo className="h-8 md:h-10" /></Link>
+        <Link to="/" aria-label="Planecitos, inicio"><Logo className="h-9 md:h-11" /></Link>
         <nav className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => <a key={l.href} href={l.href} className="font-medium hover:underline underline-offset-4">{l.label}</a>)}
+          {links.map((l) => <a key={l.href} href={l.href} className="font-semibold underline-offset-4 hover:underline">{l.label}</a>)}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
           <Link to="/login" onClick={() => track("login_started")} className={buttonClass({ variant: "ghost", size: "sm" })}>Iniciar sesión</Link>
@@ -29,7 +29,7 @@ export function SiteHeader() {
         </button>
       </div>
       {open && (
-        <div className="border-t border-border bg-paper px-5 pb-6 pt-2 lg:hidden">
+        <div className="border-t border-border bg-white px-5 pb-6 pt-2 lg:hidden">
           <nav className="flex flex-col">
             {links.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="flex min-h-12 items-center font-display text-xl">{l.label}</a>

@@ -5,20 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Planecitos design system.
- * Crema papel #F7EFE2 · Crema luz #FFFBF5 · Azul cielo #7CC6EE
- * Naranja chispa #FF6A2B · Tinta #14283F
+ * Planecitos design system v3.
+ * Blanco #FFFFFF · Gris #F4F4F6 · Tinta #16161D
+ * Edades: 2 amarillo #FFDB7A · 3 durazno #FFAE94 · 4 menta #8FDDB8 · 5 azul #9DBEFF
  */
 
 @theme inline {
-  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, sans-serif;
 
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 20px;
-  --radius-xl: 24px;
-  --radius-2xl: 28px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 26px;
   --radius-3xl: 32px;
 
   --color-background: var(--background);
@@ -47,39 +47,56 @@
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-light: var(--light);
+  --color-age-2: var(--age-2);
+  --color-age-3: var(--age-3);
+  --color-age-4: var(--age-4);
+  --color-age-5: var(--age-5);
+  --color-age-2-soft: var(--age-2-soft);
+  --color-age-3-soft: var(--age-3-soft);
+  --color-age-4-soft: var(--age-4-soft);
+  --color-age-5-soft: var(--age-5-soft);
 }
 
 :root {
-  --paper: oklch(0.953 0.022 79);      /* #F7EFE2 */
-  --light: oklch(0.992 0.01 79);       /* #FFFBF5 */
-  --sky: oklch(0.79 0.098 233);        /* #7CC6EE */
-  --sky-soft: oklch(0.92 0.045 233);
-  --sky-deep: oklch(0.67 0.13 240);    /* #3E9FD8 */
-  --spark: oklch(0.69 0.2 40);         /* #FF6A2B */
-  --ink: oklch(0.27 0.055 253);        /* #14283F */
+  --paper: #FFFFFF;
+  --light: #F4F4F6;
+  --ink: #16161D;
+  --sky: #9DBEFF;
+  --sky-soft: #E8F0FF;
+  --sky-deep: #2F5FD0;
+  --spark: #FFAE94;
+
+  --age-2: #FFDB7A;
+  --age-3: #FFAE94;
+  --age-4: #8FDDB8;
+  --age-5: #9DBEFF;
+  --age-2-soft: #FFF6DA;
+  --age-3-soft: #FFEDE6;
+  --age-4-soft: #E3F7EE;
+  --age-5-soft: #E8F0FF;
 
   --background: var(--paper);
   --foreground: var(--ink);
-  --card: var(--light);
+  --card: #FFFFFF;
   --card-foreground: var(--ink);
-  --popover: var(--light);
+  --popover: #FFFFFF;
   --popover-foreground: var(--ink);
-  --primary: var(--spark);
-  --primary-foreground: var(--ink);
-  --secondary: var(--sky-soft);
+  --primary: var(--ink);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--light);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.925 0.025 79);
-  --muted-foreground: oklch(0.45 0.04 253);
+  --muted: var(--light);
+  --muted-foreground: #4A4A55;
   --accent: var(--sky);
   --accent-foreground: var(--ink);
-  --destructive: oklch(0.55 0.2 27);
-  --destructive-foreground: var(--light);
-  --border: oklch(0.27 0.055 253 / 12%);
-  --input: oklch(0.27 0.055 253 / 18%);
+  --destructive: #C2372B;
+  --destructive-foreground: #FFFFFF;
+  --border: #E3E3E8;
+  --input: #D4D4DB;
   --ring: var(--sky-deep);
 
-  --shadow-soft: 0 2px 4px oklch(0.27 0.055 253 / 4%), 0 10px 28px -12px oklch(0.27 0.055 253 / 14%);
-  --shadow-lift: 0 4px 8px oklch(0.27 0.055 253 / 5%), 0 18px 40px -16px oklch(0.27 0.055 253 / 20%);
+  --shadow-soft: 0 1px 2px rgb(22 22 29 / 6%), 0 6px 18px -10px rgb(22 22 29 / 18%);
+  --shadow-lift: 0 2px 4px rgb(22 22 29 / 6%), 0 16px 34px -18px rgb(22 22 29 / 28%);
 }
 
 @layer base {
@@ -95,17 +112,12 @@
     font-family: var(--font-sans);
     font-size: 17px;
     line-height: 1.55;
-    background-image:
-      radial-gradient(oklch(0.27 0.055 253 / 3.5%) 1px, transparent 1px),
-      radial-gradient(oklch(0.27 0.055 253 / 2.5%) 1px, transparent 1px);
-    background-size: 22px 22px, 37px 37px;
-    background-position: 0 0, 11px 17px;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
   }
   :focus-visible {
     outline: 3px solid var(--sky-deep);
@@ -125,8 +137,8 @@
   pointer-events: none;
   background: radial-gradient(
     circle,
-    oklch(0.67 0.13 240 / 55%) 0%,
-    oklch(0.79 0.098 233 / 32%) 45%,
+    rgb(157 190 255 / 45%) 0%,
+    rgb(157 190 255 / 22%) 45%,
     transparent 72%
   );
 }

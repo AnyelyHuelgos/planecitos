@@ -13,15 +13,15 @@ export function ActivityDetail({ activity: a, eyebrow, actions }: { activity: Ac
   const fav = useFavorites().includes(a.slug);
   return (
     <article className="mx-auto max-w-2xl fade-step">
-      {eyebrow && <p className="text-xs font-bold uppercase tracking-[0.18em] text-ink">{eyebrow}</p>}
+      {eyebrow && <p className="text-base font-semibold text-muted-foreground">{eyebrow}</p>}
       <h1 className="mt-2 text-[36px] md:text-[48px]">{a.title}</h1>
       <div className="mt-4 flex flex-wrap gap-2">
         <Badge><Clock className="h-3.5 w-3.5" /> {a.duration} min</Badge>
-        <Badge tone="paper">{a.minAge}+ años</Badge>
+        <Badge tone={`age${Math.min(5, Math.max(2, a.minAge))}` as "age2"}>{a.minAge}+ años</Badge>
         <Badge tone="paper">{LOCATION_LABEL[a.location]}</Badge>
         <Badge tone="paper">{CATEGORY_LABEL[a.category]}</Badge>
       </div>
-      <ActivityArt category={a.category} className="mt-6 aspect-[16/9] w-full rounded-2xl" />
+      <ActivityArt category={a.category} age={a.minAge} className="mt-6 aspect-[16/9] w-full rounded-2xl" />
       <p className="mt-6 text-lg">{a.description}</p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
