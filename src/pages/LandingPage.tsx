@@ -67,6 +67,7 @@ function Hero() {
           <p className="mt-8 font-bold">¿Cuántos años tiene?</p>
           <div className="mt-3"><AgeButtons from="hero" /></div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-semibold text-ink/75">
+            <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Más de 100 planecitos</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Sin descargar nada</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Lista en 2 minutos</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Pago único</li>
@@ -184,11 +185,11 @@ function Demo() {
 
 /* ---------- Por edad ---------- */
 
-const AGE_EXAMPLES: Record<Age, { img: string; alt: string; title: string; text: string }> = {
-  2: { img: "/images/edad-2.webp", alt: "Una niña de 2 años saca vasos y cucharas de colores de una caja", title: "La caja misteriosa", text: "Sacar, mirar, tocar y volver a guardar. Para ellos, todo es nuevo." },
-  3: { img: "/images/edad-3.webp", alt: "Un niño de 3 años pinta con acuarela y descubre un dibujo escondido", title: "Pintura escondida", text: "Pinta encima y descubre el dibujo secreto que dejaste con crayón blanco." },
-  4: { img: "/images/edad-4.webp", alt: "Una niña de 4 años salta entre líneas de cinta de colores en el piso", title: "El camino de cintas", text: "Cuatro tiras de cinta en el piso y un circuito para saltar sin parar." },
-  5: { img: "/images/edad-5.webp", alt: "Un niño de 5 años y su papá leen con linterna dentro de un fuerte de cobijas", title: "El gran fuerte", text: "Cobijas, cojines y una linterna. Adentro, la historia la inventan juntos." },
+const AGE_EXAMPLES: Record<Age, { slug: string; img: string; alt: string; title: string; text: string }> = {
+  2: { slug: "tesoros-de-la-cocina", img: "/images/edad-2.webp", alt: "Una niña de 2 años saca vasos y cucharas de colores de una caja", title: "Tesoros de la cocina", text: "Vasos, cucharas y tapas para sacar, mirar y volver a guardar. Para ellos, todo es nuevo." },
+  3: { slug: "pintura-escondida", img: "/images/edad-3.webp", alt: "Un niño de 3 años pinta con acuarela y descubre un dibujo escondido", title: "Pintura escondida", text: "Pinta encima y descubre el dibujo secreto que dejaste con crayón blanco." },
+  4: { slug: "el-camino-de-cintas", img: "/images/edad-4.webp", alt: "Una niña de 4 años salta entre líneas de cinta de colores en el piso", title: "El camino de cintas", text: "Cuatro tiras de cinta en el piso y un circuito para saltar sin parar." },
+  5: { slug: "el-gran-fuerte", img: "/images/edad-5.webp", alt: "Un niño de 5 años y su papá leen con linterna dentro de un fuerte de cobijas", title: "El gran fuerte", text: "Cobijas, cojines y una linterna. Adentro, la historia la inventan juntos." },
 };
 
 function ByAge() {
@@ -196,7 +197,7 @@ function ByAge() {
     <section id="planecitos" className="scroll-mt-20 py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5">
         <h2 className="max-w-[16ch] text-[34px] md:text-[46px]">Un planecito para cada edad.</h2>
-        <p className="mt-4 max-w-[46ch] text-lg text-ink/75">Lo que divierte a los 2 años no es lo mismo que a los 5. Por eso cada edad tiene su color, su personaje y sus planecitos.</p>
+        <p className="mt-4 max-w-[46ch] text-lg text-ink/75">Lo que divierte a los 2 años no es lo mismo que a los 5. Por eso cada edad tiene su color, su personaje y 25 planecitos pensados para ella.</p>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {AGES.map((age) => {
             const ex = AGE_EXAMPLES[age];
@@ -209,8 +210,8 @@ function ByAge() {
                   <span className={cn("self-start rounded-full px-3 py-1 text-sm font-extrabold", info.bg)}>{age} años</span>
                   <h3 className="mt-3 text-[22px]">{ex.title}</h3>
                   <p className="mt-2 flex-1 text-[16px] text-ink/75">{ex.text}</p>
-                  <Link to="/selector" search={{ age }} onClick={() => track("hero_cta_click", { from: "by_age", age })} className="mt-4 self-start font-bold underline underline-offset-4">
-                    Planecitos para {age} años
+                  <Link to="/planecito/$slug" params={{ slug: ex.slug }} onClick={() => track("activity_viewed", { slug: ex.slug, from: "by_age" })} className="mt-4 self-start font-bold underline underline-offset-4">
+                    Ver este planecito
                   </Link>
                 </div>
               </article>
@@ -265,7 +266,7 @@ function Benefits() {
 
 function Offer() {
   const includes = [
-    "Todos los planecitos para 2, 3, 4 y 5 años",
+    "Más de 100 planecitos para 2, 3, 4 y 5 años",
     "El selector ilimitado: pide otro cuando quieras",
     "Tus planecitos favoritos guardados",
     "Planecitos nuevos que vayamos sumando",
@@ -373,6 +374,8 @@ function Footer() {
           <a href="#como-funciona" className="hover:underline">Cómo funciona</a>
           <a href="#precio" className="hover:underline">Precio</a>
           <Link to="/login" className="hover:underline">Iniciar sesión</Link>
+          <Link to="/privacidad" className="hover:underline">Privacidad</Link>
+          <Link to="/terminos" className="hover:underline">Términos</Link>
         </nav>
         <p className="text-sm text-white/70">Las actividades requieren acompañamiento de un adulto.</p>
       </div>

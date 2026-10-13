@@ -62,6 +62,13 @@ export function SignupPage() {
         <Field id="name" label="Tu nombre" autoComplete="given-name" required />
         <Field id="email" label="Email" type="email" autoComplete="email" required />
         <Field id="password" label="Contraseña" type="password" autoComplete="new-password" required minLength={6} />
+        <label className="flex items-start gap-3 text-[15px] leading-snug">
+          <input type="checkbox" name="acepto" required className="mt-0.5 h-5 w-5 shrink-0 accent-ink" />
+          <span>
+            Acepto la <Link to="/privacidad" target="_blank" className="font-semibold underline underline-offset-4">política de privacidad</Link> y
+            los <Link to="/terminos" target="_blank" className="font-semibold underline underline-offset-4">términos</Link>, y autorizo el tratamiento de mis datos.
+          </span>
+        </label>
         {error && <p role="alert" className="text-destructive">{error}</p>}
         {checkEmail && <p role="status" className="rounded-xl bg-sky-soft p-4">Te enviamos un correo para confirmar tu cuenta. Ábrelo y vuelve aquí.</p>}
         <Button type="submit" block size="lg" disabled={loading}>{loading ? "Creando…" : "Crear cuenta"}</Button>

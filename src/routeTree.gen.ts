@@ -18,10 +18,12 @@ import { Route as MisPlanecitosRouteImport } from './routes/mis-planecitos'
 import { Route as NuevaContrasenaRouteImport } from './routes/nueva-contrasena'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PremiumRouteImport } from './routes/premium'
+import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as RecuperarRouteImport } from './routes/recuperar'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResultadoRouteImport } from './routes/resultado'
 import { Route as SelectorRouteImport } from './routes/selector'
+import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as PlanecitoSlugRouteImport } from './routes/planecito/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -69,6 +71,11 @@ const PremiumRoute = PremiumRouteImport.update({
   path: '/premium',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacidadRoute = PrivacidadRouteImport.update({
+  id: '/privacidad',
+  path: '/privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecuperarRoute = RecuperarRouteImport.update({
   id: '/recuperar',
   path: '/recuperar',
@@ -89,6 +96,11 @@ const SelectorRoute = SelectorRouteImport.update({
   path: '/selector',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TerminosRoute = TerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanecitoSlugRoute = PlanecitoSlugRouteImport.update({
   id: '/planecito/$slug',
   path: '/planecito/$slug',
@@ -105,10 +117,12 @@ export interface FileRoutesByFullPath {
   '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
+  '/privacidad': typeof PrivacidadRoute
   '/recuperar': typeof RecuperarRoute
   '/registro': typeof RegistroRoute
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
+  '/terminos': typeof TerminosRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRoutesByTo {
@@ -121,10 +135,12 @@ export interface FileRoutesByTo {
   '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
+  '/privacidad': typeof PrivacidadRoute
   '/recuperar': typeof RecuperarRoute
   '/registro': typeof RegistroRoute
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
+  '/terminos': typeof TerminosRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRoutesById {
@@ -138,10 +154,12 @@ export interface FileRoutesById {
   '/nueva-contrasena': typeof NuevaContrasenaRoute
   '/onboarding': typeof OnboardingRoute
   '/premium': typeof PremiumRoute
+  '/privacidad': typeof PrivacidadRoute
   '/recuperar': typeof RecuperarRoute
   '/registro': typeof RegistroRoute
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
+  '/terminos': typeof TerminosRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
 }
 export interface FileRouteTypes {
@@ -156,10 +174,12 @@ export interface FileRouteTypes {
     | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
+    | '/privacidad'
     | '/recuperar'
     | '/registro'
     | '/resultado'
     | '/selector'
+    | '/terminos'
     | '/planecito/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,10 +192,12 @@ export interface FileRouteTypes {
     | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
+    | '/privacidad'
     | '/recuperar'
     | '/registro'
     | '/resultado'
     | '/selector'
+    | '/terminos'
     | '/planecito/$slug'
   id:
     | '__root__'
@@ -188,10 +210,12 @@ export interface FileRouteTypes {
     | '/nueva-contrasena'
     | '/onboarding'
     | '/premium'
+    | '/privacidad'
     | '/recuperar'
     | '/registro'
     | '/resultado'
     | '/selector'
+    | '/terminos'
     | '/planecito/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -205,10 +229,12 @@ export interface RootRouteChildren {
   NuevaContrasenaRoute: typeof NuevaContrasenaRoute
   OnboardingRoute: typeof OnboardingRoute
   PremiumRoute: typeof PremiumRoute
+  PrivacidadRoute: typeof PrivacidadRoute
   RecuperarRoute: typeof RecuperarRoute
   RegistroRoute: typeof RegistroRoute
   ResultadoRoute: typeof ResultadoRoute
   SelectorRoute: typeof SelectorRoute
+  TerminosRoute: typeof TerminosRoute
   PlanecitoSlugRoute: typeof PlanecitoSlugRoute
 }
 
@@ -277,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PremiumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacidad': {
+      id: '/privacidad'
+      path: '/privacidad'
+      fullPath: '/privacidad'
+      preLoaderRoute: typeof PrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recuperar': {
       id: '/recuperar'
       path: '/recuperar'
@@ -305,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SelectorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terminos': {
+      id: '/terminos'
+      path: '/terminos'
+      fullPath: '/terminos'
+      preLoaderRoute: typeof TerminosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planecito/$slug': {
       id: '/planecito/$slug'
       path: '/planecito/$slug'
@@ -325,10 +365,12 @@ const rootRouteChildren: RootRouteChildren = {
   NuevaContrasenaRoute: NuevaContrasenaRoute,
   OnboardingRoute: OnboardingRoute,
   PremiumRoute: PremiumRoute,
+  PrivacidadRoute: PrivacidadRoute,
   RecuperarRoute: RecuperarRoute,
   RegistroRoute: RegistroRoute,
   ResultadoRoute: ResultadoRoute,
   SelectorRoute: SelectorRoute,
+  TerminosRoute: TerminosRoute,
   PlanecitoSlugRoute: PlanecitoSlugRoute,
 }
 export const routeTree = rootRouteImport
