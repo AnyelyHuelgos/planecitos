@@ -6,7 +6,7 @@ import type { Material } from "@/types/activity";
 
 const schema = z.object({
   age: z.coerce.number().int().min(2).max(5).optional().catch(undefined),
-  duration: z.union([z.literal(5), z.literal(15), z.literal(30)]).optional().catch(undefined),
+  duration: z.union([z.literal(5), z.literal(15), z.literal(30), z.literal(45), z.literal(60)]).optional().catch(undefined),
   category: z.enum(["crear", "moverse", "aprender", "tranquilo", "juntos", "solo"]).optional().catch(undefined),
   materials: z.string().optional().catch(undefined),
   i: z.coerce.number().int().min(0).optional().catch(0),

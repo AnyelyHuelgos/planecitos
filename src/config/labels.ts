@@ -25,4 +25,8 @@ export const MATERIAL_LABEL: Record<Material, string> = {
 };
 
 export const AGES = [2, 3, 4, 5] as const;
-export const DURATIONS = [5, 15, 30] as const;
+export const DURATIONS = [5, 15, 30, 45, 60] as const;
+
+export function durationLabel(d: number) {
+  return d >= 60 ? "1 hora" : `${d} min`;
+}

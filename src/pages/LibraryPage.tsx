@@ -4,7 +4,7 @@ import { ActivityCard } from "@/components/ActivityCard";
 import { EmptyState } from "@/components/EmptyState";
 import { PremiumModal } from "@/components/PremiumModal";
 import { matchesFilters } from "@/services/activities";
-import { AGES, CATEGORY_LABEL, DURATIONS, LOCATION_LABEL, MATERIAL_LABEL } from "@/config/labels";
+import { AGES, CATEGORY_LABEL, DURATIONS, LOCATION_LABEL, MATERIAL_LABEL, durationLabel } from "@/config/labels";
 import type { Age, Category, Duration, Location, Material } from "@/types/activity";
 import { useCatalog, useUser } from "@/hooks/use-session";
 
@@ -24,9 +24,27 @@ export function LibraryPage() {
     () => activities.filter((a) =>
       matchesFilters(a, { age, duration, category }) &&
       (!material || a.materialTags.includes(material)) &&
-      (!location || a.location === location)),
+      // "En cualquier lugar" también sirve para casa y para afuera
+      (!location || a.location === location || a.location === "cualquier")),
     [activities, age, duration, category, material, location],
   );
+
+  // Si no hay coincidencia exacta, sugerimos los más parecidos quitando filtros de a uno
+  const similar = useMemo(() => {
+    if (list.length) return [];
+    const loc = (a: (typeof activities)[number]) => !location || a.location === location || a.location === "cualquier";
+    const tries = [
+      (a: (typeof activities)[number]) => matchesFilters(a, { age, duration, category }) && loc(a),
+      (a: (typeof activities)[number]) => matchesFilters(a, { age, duration, category }),
+      (a: (typeof activities)[number]) => matchesFilters(a, { age, duration }) && loc(a),
+      (a: (typeof activities)[number]) => matchesFilters(a, { age }),
+    ];
+    for (const t of tries) {
+      const res = activities.filter(t);
+      if (res.length) return res.slice(0, 6);
+    }
+    return [];
+  }, [list.length, activities, age, duration, category, location]);
 
   return (
     <AppLayout>
@@ -38,7 +56,7 @@ export function LibraryPage() {
           </select></label>
         <label className="space-y-1"><span className="text-sm font-medium">Duración</span>
           <select className={selectClass} value={duration ?? ""} onChange={(e) => setDuration(e.target.value ? (Number(e.target.value) as Duration) : undefined)}>
-            <option value="">Cualquiera</option>{DURATIONS.map((d) => <option key={d} value={d}>Hasta {d} min</option>)}
+            <option value="">Cualquiera</option>{DURATIONS.map((d) => <option key={d} value={d}>Hasta {durationLabel(d)}</option>)}
           </select></label>
         <label className="space-y-1"><span className="text-sm font-medium">Categoría</span>
           <select className={selectClass} value={category ?? ""} onChange={(e) => setCategory((e.target.value || undefined) as Category)}>
@@ -57,7 +75,15 @@ export function LibraryPage() {
       <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((a) => <ActivityCard key={a.id} activity={a} locked={a.premium && !user?.premium} onLockedClick={() => setModal(true)} />)}
       </div>
-      {!list.length && <EmptyState title="Ningún planecito con esos filtros. Prueba quitar alguno." />}
+      {!list.length && !similar.length && <EmptyState title="Ningún planecito con esos filtros. Prueba quitar alguno." />}
+      {!list.length && similar.length > 0 && (
+        <div>
+          <p className="text-lg font-semibold">No hay uno exacto con todos esos filtros, pero estos se parecen:</p>
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {similar.map((a) => <ActivityCard key={a.id} activity={a} locked={a.premium && !user?.premium} onLockedClick={() => setModal(true)} />)}
+          </div>
+        </div>
+      )}
       <PremiumModal open={modal} onOpenChange={setModal} />
     </AppLayout>
   );

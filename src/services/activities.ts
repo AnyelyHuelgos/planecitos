@@ -51,9 +51,20 @@ export async function findActivities(f: SelectorFilters): Promise<Activity[]> {
     { age: f.age },
     {},
   ];
+  // Primero, los que duran exactamente el tiempo elegido
+  if (f.duration) {
+    const exact = all.filter((a) => matchesFilters(a, f) && a.duration === f.duration);
+    if (exact.length) return exact;
+  }
   for (const attempt of attempts) {
     const res = all.filter((a) => matchesFilters(a, attempt));
-    if (res.length) return res;
+    if (res.length) return byClosestDuration(res, f.duration);
   }
   return all;
+}
+
+/** Ordena para que primero salgan los planecitos con la duración más cercana a la elegida. */
+function byClosestDuration(list: Activity[], duration?: number) {
+  if (!duration) return list;
+  return [...list].sort((a, b) => Math.abs(a.duration - duration) - Math.abs(b.duration - duration));
 }

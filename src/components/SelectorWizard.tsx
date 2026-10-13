@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import type { Age, Category, Duration, Material } from "@/types/activity";
-import { AGES, CATEGORY_LABEL, DURATIONS, MATERIAL_LABEL } from "@/config/labels";
+import { AGES, CATEGORY_LABEL, DURATIONS, MATERIAL_LABEL, durationLabel } from "@/config/labels";
 import { SelectorOption } from "./SelectorOption";
 import { Button } from "./Button";
 import { track } from "@/services/analytics";
@@ -76,7 +76,7 @@ export function SelectorWizard({ demo, initialAge }: Props) {
             <SelectorOption key={a} selected={age === a} onClick={() => pick(setAge, a)}>{a} años</SelectorOption>
           ))}
           {step === 1 && DURATIONS.map((d) => (
-            <SelectorOption key={d} selected={duration === d} onClick={() => pick(setDuration, d)}>{d} min</SelectorOption>
+            <SelectorOption key={d} selected={duration === d} onClick={() => pick(setDuration, d)}>{durationLabel(d)}</SelectorOption>
           ))}
           {step === 2 && (demo ? demoCategories : fullCategories).map((c) => (
             <SelectorOption key={c} selected={category === c} onClick={() => pick(setCategory, c)}>{CATEGORY_LABEL[c]}</SelectorOption>

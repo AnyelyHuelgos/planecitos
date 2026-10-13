@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Heart, Lock } from "lucide-react";
 import type { Activity } from "@/types/activity";
-import { CATEGORY_LABEL } from "@/config/labels";
+import { durationLabel, CATEGORY_LABEL } from "@/config/labels";
 import { Badge } from "./primitives";
 import { ActivityArt } from "./ActivityArt";
 import { useFavorites } from "@/hooks/use-session";
@@ -25,7 +25,7 @@ export function ActivityCard({ activity: a, locked, onLockedClick, showFavorite 
       <div className="p-5">
         <h3 className="text-[22px]">{a.title}</h3>
         <div className="mt-3 flex flex-wrap gap-2">
-          <Badge><Clock className="h-3.5 w-3.5" /> {a.duration} min</Badge>
+          <Badge><Clock className="h-3.5 w-3.5" /> {durationLabel(a.duration)}</Badge>
           <Badge tone={`age${Math.min(5, Math.max(2, a.minAge))}` as "age2"}>{a.minAge}+ años</Badge>
           <Badge tone="paper">{CATEGORY_LABEL[a.category]}</Badge>
         </div>

@@ -1,5 +1,5 @@
 export type Age = 2 | 3 | 4 | 5;
-export type Duration = 5 | 15 | 30;
+export type Duration = 5 | 15 | 30 | 45 | 60;
 export type Category = "crear" | "moverse" | "aprender" | "tranquilo" | "juntos" | "solo";
 export type Location = "casa" | "afuera" | "cualquier";
 export type Material = "papel" | "colores" | "carton" | "plastilina" | "cinta" | "nada";

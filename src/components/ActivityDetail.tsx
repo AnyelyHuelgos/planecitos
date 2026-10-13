@@ -1,7 +1,7 @@
 import { Clock, Heart, Lightbulb, Timer } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Activity } from "@/types/activity";
-import { CATEGORY_LABEL, LOCATION_LABEL } from "@/config/labels";
+import { durationLabel, CATEGORY_LABEL, LOCATION_LABEL } from "@/config/labels";
 import { Badge } from "./primitives";
 import { ActivityArt } from "./ActivityArt";
 import { Button } from "./Button";
@@ -16,7 +16,7 @@ export function ActivityDetail({ activity: a, eyebrow, actions }: { activity: Ac
       {eyebrow && <p className="text-base font-semibold text-muted-foreground">{eyebrow}</p>}
       <h1 className="mt-2 text-[36px] md:text-[48px]">{a.title}</h1>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Badge><Clock className="h-3.5 w-3.5" /> {a.duration} min</Badge>
+        <Badge><Clock className="h-3.5 w-3.5" /> {durationLabel(a.duration)}</Badge>
         <Badge tone={`age${Math.min(5, Math.max(2, a.minAge))}` as "age2"}>{a.minAge}+ años</Badge>
         <Badge tone="paper">{LOCATION_LABEL[a.location]}</Badge>
         <Badge tone="paper">{CATEGORY_LABEL[a.category]}</Badge>

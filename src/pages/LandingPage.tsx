@@ -140,7 +140,7 @@ function Problem() {
 function HowItWorks() {
   const steps: { age: Age; t: string; d: string }[] = [
     { age: 2, t: "Dinos la edad", d: "De 2 a 5 años. Cada edad tiene sus planecitos." },
-    { age: 3, t: "Elige tiempo y ganas", d: "5, 15 o 30 minutos. Crear, moverse, aprender o un rato tranquilo." },
+    { age: 3, t: "Elige tiempo y ganas", d: "De 5 minutos a 1 hora. Crear, moverse, aprender o un rato tranquilo." },
     { age: 4, t: "Recibe tu planecito", d: "Materiales, preparación y pasos claros. Si no te convence, pide otro." },
   ];
   return (
@@ -314,7 +314,7 @@ function Offer() {
 const faqs = [
   { q: "¿Para qué edades es?", a: "Para niños de 2 a 5 años. Cada planecito dice para qué edad es, y el selector te muestra los que le sirven a tu hijo." },
   { q: "¿Necesito comprar materiales?", a: "No. Los planecitos usan cosas que ya tienes en casa, como papel, cinta, cojines o vasos. Algunos no necesitan nada." },
-  { q: "¿Cuánto duran?", a: "Tú eliges: 5, 15 o 30 minutos." },
+  { q: "¿Cuánto duran?", a: "Tú eliges: 5, 15, 30 o 45 minutos, o una hora completa para los días con más tiempo." },
   { q: "¿Tengo que descargar una app o imprimir?", a: "No. Planecitos funciona en el navegador de tu celular o computador, y todo está en la pantalla." },
   { q: "¿Cómo recibo el acceso?", a: "Después de pagar, creas tu cuenta en Planecitos con el mismo correo de tu compra y todos los planecitos se desbloquean solos." },
   { q: "¿Y si no me gusta?", a: "Tienes 7 días para pedir el reembolso desde Hotmart, sin preguntas." },
