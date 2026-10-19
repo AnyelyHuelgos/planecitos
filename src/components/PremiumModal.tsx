@@ -14,12 +14,12 @@ export function PremiumModal({ open, onOpenChange }: { open: boolean; onOpenChan
             <X className="h-5 w-5" />
           </Dialog.Close>
           <img src="/brand/planecitos-isotipo.svg" alt="" className="h-14 w-14" />
-          <Dialog.Title className="mt-4 font-display text-[26px] font-semibold">Desbloquea todos los planecitos</Dialog.Title>
-          <Dialog.Description className="mt-2 text-muted-foreground">Acceso fundadores · Pago único</Dialog.Description>
+          <Dialog.Title className="mt-4 font-display text-[26px] font-extrabold">Desbloquea todo Planecitos</Dialog.Title>
+          <Dialog.Description className="mt-2 text-muted-foreground">Precio de lanzamiento. Pago único, sin mensualidad.</Dialog.Description>
           <p className="mt-5 font-display text-4xl font-semibold">{FOUNDERS_PRICE}</p>
           <ul className="mt-5 space-y-2">
-            {["Todos los planecitos de esta etapa", "Según edad y tiempo", "Sin mensualidad"].map((t) => (
-              <li key={t} className="flex items-center gap-2"><Check className="h-5 w-5 text-sky-deep" /> {t}</li>
+            {["140 planecitos para 2 a 5 años", "10 cuentitos mágicos para leer y escuchar", "10 imprimibles para colorear y recortar", "Planecito SOS y tus favoritos guardados"].map((t) => (
+              <li key={t} className="flex items-center gap-2"><Check className="h-5 w-5 shrink-0" /> {t}</li>
             ))}
           </ul>
           <a href={HOTMART_CHECKOUT_URL} onClick={() => track("checkout_clicked", { from: "modal" })} className={buttonClass({ block: true, size: "lg", className: "mt-6" })}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Check, ChevronDown, Clock, Home, HeartHandshake, MonitorOff } from "lucide-react";
+import { BookOpen, Check, ChevronDown, Clock, Home, HeartHandshake, MonitorOff, Printer, Zap } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Logo } from "@/components/primitives";
 import { buttonClass } from "@/components/Button";
@@ -21,6 +21,7 @@ export function LandingPage() {
         <Problem />
         <HowItWorks />
         <Demo />
+        <MoreThanActivities />
         <ByAge />
         <Benefits />
         <Offer />
@@ -67,7 +68,7 @@ function Hero() {
           <p className="mt-8 font-bold">¿Cuántos años tiene?</p>
           <div className="mt-3"><AgeButtons from="hero" /></div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-semibold text-ink/75">
-            <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Más de 100 planecitos</li>
+            <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> 140 planecitos, cuentos e imprimibles</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Sin descargar nada</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Lista en 2 minutos</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Pago único</li>
@@ -183,6 +184,37 @@ function Demo() {
   );
 }
 
+/* ---------- Mucho más que actividades ---------- */
+
+function MoreThanActivities() {
+  const items = [
+    { icon: Zap, bg: "bg-age-3-soft", age: 3 as Age, title: "Planecito SOS", text: "¿Ya no sabes qué inventar? Un toque y tienes una idea de 15 minutos, sin materiales, para la edad de tu hijo.", cta: null },
+    { icon: BookOpen, bg: "bg-age-5-soft", age: 5 as Age, title: "Cuentitos mágicos", text: "10 cuentos cortos donde tu hijo es parte de la historia. Para leer o escuchar, con un juego al final para seguir fuera de la pantalla.", cta: { to: "/cuentos/$slug" as const, params: { slug: "luna-y-la-estrella-perdida" }, label: "Leer un cuento gratis" } },
+    { icon: Printer, bg: "bg-age-2-soft", age: 2 as Age, title: "Pequeños artistas", text: "10 imprimibles para colorear, laberintos, une los puntos y máscaras de los personajes. En blanco y negro, para ahorrar tinta.", cta: { to: "/imprimibles" as const, params: undefined, label: "Ver los imprimibles" } },
+  ];
+  return (
+    <section className="py-16 md:py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <h2 className="max-w-[18ch] text-[34px] md:text-[46px]">Mucho más que actividades.</h2>
+        <p className="mt-4 max-w-[46ch] text-lg text-ink/75">Cuando necesites una idea rápida, un cuento para dormir o algo para imprimir, está todo en el mismo lugar.</p>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {items.map(({ icon: Icon, bg, age, title, text, cta }) => (
+            <article key={title} className={cn("relative flex flex-col rounded-[28px] p-6", bg)}>
+              <Character age={age} className="absolute -top-8 right-5 w-16" />
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white"><Icon className="h-6 w-6" /></span>
+              <h3 className="mt-4 text-[24px]">{title}</h3>
+              <p className="mt-2 flex-1 text-[16px] text-ink/80">{text}</p>
+              {cta && (
+                <Link to={cta.to} params={cta.params as never} className="mt-4 self-start font-bold underline underline-offset-4">{cta.label}</Link>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Por edad ---------- */
 
 const AGE_EXAMPLES: Record<Age, { slug: string; img: string; alt: string; title: string; text: string }> = {
@@ -266,10 +298,11 @@ function Benefits() {
 
 function Offer() {
   const includes = [
-    "Más de 100 planecitos para 2, 3, 4 y 5 años",
-    "El selector ilimitado: pide otro cuando quieras",
+    "140 planecitos para 2, 3, 4 y 5 años",
+    "10 cuentitos mágicos para leer y escuchar",
+    "10 imprimibles para colorear, laberintos y recortables",
+    "Planecito SOS: una idea en un solo toque",
     "Tus planecitos favoritos guardados",
-    "Planecitos nuevos que vayamos sumando",
   ];
   return (
     <section id="precio" className="scroll-mt-20 py-16 md:py-24">
@@ -313,6 +346,7 @@ function Offer() {
 
 const faqs = [
   { q: "¿Para qué edades es?", a: "Para niños de 2 a 5 años. Cada planecito dice para qué edad es, y el selector te muestra los que le sirven a tu hijo." },
+  { q: "¿Qué incluye exactamente?", a: "140 planecitos para niños de 2 a 5 años, 10 cuentos para leer y escuchar, 10 imprimibles para descargar, el Planecito SOS y tus favoritos guardados. Puedes probar un cuento, un imprimible y algunos planecitos gratis antes de comprar." },
   { q: "¿Necesito comprar materiales?", a: "No. Los planecitos usan cosas que ya tienes en casa, como papel, cinta, cojines o vasos. Algunos no necesitan nada." },
   { q: "¿Cuánto duran?", a: "Tú eliges: 5, 15, 30 o 45 minutos, o una hora completa para los días con más tiempo." },
   { q: "¿Tengo que descargar una app o imprimir?", a: "No. Planecitos funciona en el navegador de tu celular o computador, y todo está en la pantalla." },

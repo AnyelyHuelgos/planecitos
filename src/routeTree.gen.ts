@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as CuentaRouteImport } from './routes/cuenta'
+import { Route as ImprimiblesRouteImport } from './routes/imprimibles'
 import { Route as InicioRouteImport } from './routes/inicio'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MisPlanecitosRouteImport } from './routes/mis-planecitos'
@@ -24,6 +25,8 @@ import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResultadoRouteImport } from './routes/resultado'
 import { Route as SelectorRouteImport } from './routes/selector'
 import { Route as TerminosRouteImport } from './routes/terminos'
+import { Route as CuentosIndexRouteImport } from './routes/cuentos/index'
+import { Route as CuentosSlugRouteImport } from './routes/cuentos/$slug'
 import { Route as PlanecitoSlugRouteImport } from './routes/planecito/$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -39,6 +42,11 @@ const BibliotecaRoute = BibliotecaRouteImport.update({
 const CuentaRoute = CuentaRouteImport.update({
   id: '/cuenta',
   path: '/cuenta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImprimiblesRoute = ImprimiblesRouteImport.update({
+  id: '/imprimibles',
+  path: '/imprimibles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InicioRoute = InicioRouteImport.update({
@@ -101,6 +109,16 @@ const TerminosRoute = TerminosRouteImport.update({
   path: '/terminos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CuentosIndexRoute = CuentosIndexRouteImport.update({
+  id: '/cuentos/',
+  path: '/cuentos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuentosSlugRoute = CuentosSlugRouteImport.update({
+  id: '/cuentos/$slug',
+  path: '/cuentos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanecitoSlugRoute = PlanecitoSlugRouteImport.update({
   id: '/planecito/$slug',
   path: '/planecito/$slug',
@@ -111,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
   '/cuenta': typeof CuentaRoute
+  '/imprimibles': typeof ImprimiblesRoute
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
@@ -123,12 +142,15 @@ export interface FileRoutesByFullPath {
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
   '/terminos': typeof TerminosRoute
+  '/cuentos/$slug': typeof CuentosSlugRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
+  '/cuentos/': typeof CuentosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
   '/cuenta': typeof CuentaRoute
+  '/imprimibles': typeof ImprimiblesRoute
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
@@ -141,13 +163,16 @@ export interface FileRoutesByTo {
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
   '/terminos': typeof TerminosRoute
+  '/cuentos/$slug': typeof CuentosSlugRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
+  '/cuentos': typeof CuentosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
   '/cuenta': typeof CuentaRoute
+  '/imprimibles': typeof ImprimiblesRoute
   '/inicio': typeof InicioRoute
   '/login': typeof LoginRoute
   '/mis-planecitos': typeof MisPlanecitosRoute
@@ -160,7 +185,9 @@ export interface FileRoutesById {
   '/resultado': typeof ResultadoRoute
   '/selector': typeof SelectorRoute
   '/terminos': typeof TerminosRoute
+  '/cuentos/$slug': typeof CuentosSlugRoute
   '/planecito/$slug': typeof PlanecitoSlugRoute
+  '/cuentos/': typeof CuentosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,6 +195,7 @@ export interface FileRouteTypes {
     | '/'
     | '/biblioteca'
     | '/cuenta'
+    | '/imprimibles'
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
@@ -180,12 +208,15 @@ export interface FileRouteTypes {
     | '/resultado'
     | '/selector'
     | '/terminos'
+    | '/cuentos/$slug'
     | '/planecito/$slug'
+    | '/cuentos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/biblioteca'
     | '/cuenta'
+    | '/imprimibles'
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
@@ -198,12 +229,15 @@ export interface FileRouteTypes {
     | '/resultado'
     | '/selector'
     | '/terminos'
+    | '/cuentos/$slug'
     | '/planecito/$slug'
+    | '/cuentos'
   id:
     | '__root__'
     | '/'
     | '/biblioteca'
     | '/cuenta'
+    | '/imprimibles'
     | '/inicio'
     | '/login'
     | '/mis-planecitos'
@@ -216,13 +250,16 @@ export interface FileRouteTypes {
     | '/resultado'
     | '/selector'
     | '/terminos'
+    | '/cuentos/$slug'
     | '/planecito/$slug'
+    | '/cuentos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BibliotecaRoute: typeof BibliotecaRoute
   CuentaRoute: typeof CuentaRoute
+  ImprimiblesRoute: typeof ImprimiblesRoute
   InicioRoute: typeof InicioRoute
   LoginRoute: typeof LoginRoute
   MisPlanecitosRoute: typeof MisPlanecitosRoute
@@ -235,7 +272,9 @@ export interface RootRouteChildren {
   ResultadoRoute: typeof ResultadoRoute
   SelectorRoute: typeof SelectorRoute
   TerminosRoute: typeof TerminosRoute
+  CuentosSlugRoute: typeof CuentosSlugRoute
   PlanecitoSlugRoute: typeof PlanecitoSlugRoute
+  CuentosIndexRoute: typeof CuentosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -259,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/cuenta'
       fullPath: '/cuenta'
       preLoaderRoute: typeof CuentaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/imprimibles': {
+      id: '/imprimibles'
+      path: '/imprimibles'
+      fullPath: '/imprimibles'
+      preLoaderRoute: typeof ImprimiblesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inicio': {
@@ -345,6 +391,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TerminosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cuentos/': {
+      id: '/cuentos/'
+      path: '/cuentos'
+      fullPath: '/cuentos/'
+      preLoaderRoute: typeof CuentosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cuentos/$slug': {
+      id: '/cuentos/$slug'
+      path: '/cuentos/$slug'
+      fullPath: '/cuentos/$slug'
+      preLoaderRoute: typeof CuentosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planecito/$slug': {
       id: '/planecito/$slug'
       path: '/planecito/$slug'
@@ -359,6 +419,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibliotecaRoute: BibliotecaRoute,
   CuentaRoute: CuentaRoute,
+  ImprimiblesRoute: ImprimiblesRoute,
   InicioRoute: InicioRoute,
   LoginRoute: LoginRoute,
   MisPlanecitosRoute: MisPlanecitosRoute,
@@ -371,7 +432,9 @@ const rootRouteChildren: RootRouteChildren = {
   ResultadoRoute: ResultadoRoute,
   SelectorRoute: SelectorRoute,
   TerminosRoute: TerminosRoute,
+  CuentosSlugRoute: CuentosSlugRoute,
   PlanecitoSlugRoute: PlanecitoSlugRoute,
+  CuentosIndexRoute: CuentosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

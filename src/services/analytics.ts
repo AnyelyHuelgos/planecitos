@@ -8,7 +8,11 @@ export type AnalyticsEvent =
   | "login_started"
   | "signup_started"
   | "login_completed"
-  | "signup_completed";
+  | "signup_completed"
+  | "story_started"
+  | "story_completed"
+  | "printable_downloaded"
+  | "sos_clicked";
 
 export function track(event: AnalyticsEvent, data?: Record<string, unknown>) {
   if (import.meta.env.DEV) console.debug("[analytics]", event, data ?? {});
