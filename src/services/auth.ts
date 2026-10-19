@@ -16,53 +16,42 @@ export function isSessionReady(): boolean {
 
 function translate(message: string): string {
   const m = message.toLowerCase();
-  if (m.includes("invalid login")) return "Correo o contraseña incorrectos.";
-  if (m.includes("already registered") || m.includes("already been registered"))
-    return "Ya existe una cuenta con ese correo. Inicia sesión.";
-  if (m.includes("email not confirmed")) return "Confirma tu correo antes de entrar. Revisa tu bandeja.";
-  if (m.includes("password")) return "La contraseña debe tener al menos 6 caracteres.";
-  if (m.includes("rate limit") || m.includes("too many"))
-    return "Demasiados intentos. Espera unos minutos e intenta de nuevo.";
+  if (m.includes("expired") || m.includes("invalid") || m.includes("otp"))
+    return "El código no es correcto o ya venció. Revisa los números o pide uno nuevo.";
+  if (m.includes("signups not allowed") || m.includes("user not found"))
+    return "No encontramos una cuenta con ese correo. Créala desde Registrarme.";
+  if (m.includes("rate limit") || m.includes("too many") || m.includes("seconds"))
+    return "Espera un minuto antes de pedir otro código.";
+  if (m.includes("email")) return "Revisa que el correo esté bien escrito.";
   return "Algo salió mal. Intenta de nuevo.";
 }
 
-export async function signUp(input: { name: string; email: string; password: string }) {
-  const { data, error } = await supabase.auth.signUp({
+/**
+ * Envía un código de 6 números al correo. Sin contraseña.
+ * - Registro (createUser = true): crea la cuenta si no existe.
+ * - Inicio de sesión (createUser = false): solo para cuentas que ya existen.
+ */
+export async function sendLoginCode(input: { email: string; name?: string; createUser: boolean }) {
+  const { error } = await supabase.auth.signInWithOtp({
     email: input.email.trim().toLowerCase(),
-    password: input.password,
     options: {
-      data: { name: input.name.trim() },
-      ...(isBrowser ? { emailRedirectTo: `${window.location.origin}/onboarding` } : {}),
+      shouldCreateUser: input.createUser,
+      ...(input.name ? { data: { name: input.name.trim() } } : {}),
     },
   });
-  if (error) return { error: translate(error.message), needsConfirmation: false };
-  // Si Supabase pide confirmar el correo, todavía no hay sesión.
-  if (!data.session) return { error: null, needsConfirmation: true };
-  await loadUserData(data.session.user.id);
-  return { error: null, needsConfirmation: false };
+  return { error: error ? translate(error.message) : null };
 }
 
-export async function signIn(input: { email: string; password: string }) {
-  const { data, error } = await supabase.auth.signInWithPassword({
+/** Verifica el código y deja la sesión abierta en este dispositivo. */
+export async function verifyLoginCode(input: { email: string; code: string }) {
+  const { data, error } = await supabase.auth.verifyOtp({
     email: input.email.trim().toLowerCase(),
-    password: input.password,
+    token: input.code.replace(/\D/g, ""),
+    type: "email",
   });
-  if (error) return { error: translate(error.message) };
+  if (error || !data.user) return { error: translate(error?.message ?? "invalid") };
   await loadUserData(data.user.id);
   return { error: null as string | null };
-}
-
-export async function requestPasswordReset(email: string) {
-  const { error } = await supabase.auth.resetPasswordForEmail(
-    email.trim().toLowerCase(),
-    isBrowser ? { redirectTo: `${window.location.origin}/nueva-contrasena` } : {},
-  );
-  return { error: error ? translate(error.message) : null };
-}
-
-export async function updatePassword(password: string) {
-  const { error } = await supabase.auth.updateUser({ password });
-  return { error: error ? translate(error.message) : null };
 }
 
 export async function signOut() {
