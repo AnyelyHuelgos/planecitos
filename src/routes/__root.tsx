@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { initSession } from "../services/auth";
+import { initPixel, trackPageView } from "../services/analytics";
 
 function NotFoundComponent() {
   return (
@@ -126,8 +127,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  // Restaura la sesión de Supabase al abrir la app
-  useEffect(() => { initSession(); }, []);
+  const router = useRouter();
+  // Restaura la sesión de Supabase y carga el píxel de Meta al abrir la app
+  useEffect(() => { initSession(); initPixel(); }, []);
+  // Cada cambio de página cuenta como una visita para Meta
+  useEffect(() => {
+    let last = router.state.location.pathname;
+    return router.subscribe("onResolved", ({ toLocation }) => {
+      if (toLocation.pathname !== last) {
+        last = toLocation.pathname;
+        trackPageView();
+      }
+    });
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>

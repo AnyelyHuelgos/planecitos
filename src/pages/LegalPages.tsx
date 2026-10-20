@@ -55,7 +55,8 @@ export function PrivacyPage() {
         <h2>Con quién se comparten</h2>
         <p>
           Usamos proveedores que guardan o procesan datos por nosotros: Supabase (base de datos y cuentas), Netlify (alojamiento de la web)
-          y Hotmart (pagos). Si usamos herramientas de medición de anuncios, como el píxel de Meta, lo indicaremos en esta página.
+          y Hotmart (pagos). También usamos el píxel de Meta (Facebook e Instagram) para saber qué anuncios traen visitas y compras: registra
+          qué páginas se visitan y acciones como abrir un cuento o crear una cuenta. Nunca le enviamos el apodo ni la edad de tu hijo.
         </p>
       </section>
       <section>
