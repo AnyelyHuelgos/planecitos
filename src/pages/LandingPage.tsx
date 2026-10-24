@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Check, ChevronDown, Clock, Home, HeartHandshake, MonitorOff, Printer, Zap } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -22,13 +22,17 @@ export function LandingPage() {
         <HowItWorks />
         <Demo />
         <MoreThanActivities />
+        <BuyStrip from="mas_que_actividades" />
         <ByAge />
         <Benefits />
+        <BuyStrip from="beneficios" className="bg-light" text="Más juego, menos pantallas, desde hoy." />
         <Offer />
         <Faq />
+        <BuyStrip from="preguntas" className="bg-light" text="¿Resolvimos tus dudas?" />
         <FinalCta />
       </main>
       <Footer />
+      <StickyBuyBar />
     </div>
   );
 }
@@ -67,7 +71,10 @@ function Hero() {
           </p>
           <p className="mt-8 font-bold">¿Cuántos años tiene?</p>
           <div className="mt-3"><AgeButtons from="hero" /></div>
-          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-semibold text-ink/75">
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <BuyButton from="hero" variant="secondary" size="md" label="Desbloquear todo · $39.900" className="whitespace-nowrap" />
+          </div>
+          <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-semibold text-ink/75">
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> 140 planecitos, cuentos e imprimibles</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Sin descargar nada</li>
             <li className="flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={3} /> Lista en 2 minutos</li>
@@ -328,13 +335,7 @@ function Offer() {
               </li>
             ))}
           </ul>
-          <a
-            href={HOTMART_CHECKOUT_URL}
-            onClick={() => track("checkout_clicked", { from: "landing" })}
-            className={buttonClass({ size: "lg", block: true, className: "mt-8" })}
-          >
-            Desbloquear Planecitos
-          </a>
+          <BuyButton from="oferta" block className="mt-8" />
           <p className="mt-4 text-center text-[15px] text-ink/75">Tienes 7 días de garantía. Si no te sirve, te devolvemos el dinero.</p>
         </div>
       </div>
@@ -394,14 +395,98 @@ function FinalCta() {
         <h2 className="mt-8 text-[36px] md:text-[52px]">Hoy no tienes que inventar nada.</h2>
         <p className="mx-auto mt-4 max-w-[40ch] text-lg text-ink/75">Elige la edad y en un minuto tienes el planecito de hoy.</p>
         <div className="mt-8 flex justify-center"><AgeButtons from="final" /></div>
+        <p className="mt-8 font-semibold text-ink/75">¿Ya te decidiste?</p>
+        <div className="mt-3 flex justify-center"><BuyButton from="cierre" /></div>
       </div>
     </section>
   );
 }
 
+/* ---------- Botones de compra ---------- */
+
+function BuyButton({
+  from,
+  label = "Desbloquear Planecitos",
+  variant = "primary",
+  size = "lg",
+  block = false,
+  className,
+}: {
+  from: string;
+  label?: string;
+  variant?: "primary" | "secondary";
+  size?: "md" | "lg";
+  block?: boolean;
+  className?: string;
+}) {
+  return (
+    <a
+      href={HOTMART_CHECKOUT_URL}
+      onClick={() => track("checkout_clicked", { from })}
+      className={buttonClass({ variant, size, block, className })}
+    >
+      {label}
+    </a>
+  );
+}
+
+/** Franja con botón de compra entre secciones. Usa el mismo fondo de la sección anterior. */
+function BuyStrip({ from, text = "Todo Planecitos por un pago único.", className }: { from: string; text?: string; className?: string }) {
+  return (
+    <div className={cn("-mt-4 pb-16 md:-mt-8 md:pb-24", className)}>
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-5 text-center">
+        <p className="text-lg font-semibold">{text}</p>
+        <BuyButton from={from} />
+        <p className="text-[15px] text-ink/70">{FOUNDERS_PRICE} · Pago único · 7 días de garantía</p>
+      </div>
+    </div>
+  );
+}
+
+/** Barra fija en el celular: aparece al bajar y se esconde en la sección de precio y en el footer. */
+function StickyBuyBar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 700);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const targets = ["precio", "pie"].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const visible = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      setHidden(visible.size > 0);
+    });
+    targets.forEach((t) => io.observe(t));
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
+  }, []);
+  const show = scrolled && !hidden;
+  return (
+    <div
+      aria-hidden={!show}
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-white/95 px-4 pt-3 backdrop-blur transition-transform duration-300 motion-reduce:transition-none md:hidden",
+        show ? "translate-y-0" : "pointer-events-none translate-y-full",
+      )}
+      style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+    >
+      <div className="flex items-center gap-3">
+        <div className="min-w-0 flex-1 leading-tight">
+          <p className="font-display text-xl font-extrabold">{FOUNDERS_PRICE}</p>
+          <p className="text-[13px] font-semibold text-ink/70">Pago único · 7 días de garantía</p>
+        </div>
+        <BuyButton from="barra_fija" size="md" label="Desbloquear" className="shrink-0" />
+      </div>
+    </div>
+  );
+}
+
 function Footer() {
   return (
-    <footer className="bg-ink py-12 text-white">
+    <footer id="pie" className="bg-ink py-12 pb-28 text-white md:pb-12">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 md:flex-row md:items-center md:justify-between">
         <Logo variant="negativo" className="h-10 self-start" />
         <nav className="flex flex-wrap gap-x-6 gap-y-2 font-semibold">
